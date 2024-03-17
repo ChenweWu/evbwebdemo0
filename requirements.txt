@@ -31,3 +31,4 @@ tzdata==2024.1
 werkzeug==3.0.1
 xgboost==2.0.3
 zipp==3.18.1
+shap
