@@ -167,7 +167,7 @@ def process_data(file):
         # stats['device_mapped'] = group['device_mapped'].iloc[0]
     #     stats['vb'] = group['Vibration Level'].iloc[0]
         # Append to the aggregated data DataFrame
-        aggregated_data_0 = aggregated_data_0.append(stats)
+        aggregated_data_0 = aggregated_data_0._append(stats)
         
     # 			device_mapped
     # Resetting index to make Time and Datasource regular columns
@@ -214,7 +214,7 @@ def process_data(file):
         stats['device_mapped'] = group['device_mapped'].iloc[0]
     #     stats['vb'] = group['Vibration Level'].iloc[0]
         # Append to the aggregated data DataFrame
-        aggregated_data_1 = aggregated_data_1.append(stats)
+        aggregated_data_1 = aggregated_data_1._append(stats)
         
     # 			device_mapped
     # Resetting index to make Time and Datasource regular columns
