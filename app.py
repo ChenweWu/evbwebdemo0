@@ -34,7 +34,14 @@ def upload_visualize():
         return jsonify({'error': 'No selected file or file type not allowed'})
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     filename = secure_filename(f"{timestamp}_{file.filename}")
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    upload_folder = app.config['UPLOAD_FOLDER']
+    filepath = os.path.join(upload_folder, filename)
+    if not os.path.exists(upload_folder):
+        os.makedirs(upload_folder)  # This will create the directory, also creates all intermediate directories if they don't exist
+        print(f"Directory '{upload_folder}' was created.")
+    else:
+        print(f"Directory '{upload_folder}' already exists.")
+    print("user uploaded to : ",filepath)
     file.save(filepath)
     session['last_uploaded_filepath'] = filepath
     # Process for visualization
