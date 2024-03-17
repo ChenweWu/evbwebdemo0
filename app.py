@@ -13,7 +13,7 @@ from datetime import datetime
 # Assuming necessary import statements for your prediction and visualization functions are here
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['UPLOAD_FOLDER'] = '/opt/render/project/data/uploads/'
 app.config['ALLOWED_EXTENSIONS'] = {'csv'}
 app.config["SECRET_KEY"] = "aaa"
 app.config["SESSION_TYPE"] = "filesystem"
