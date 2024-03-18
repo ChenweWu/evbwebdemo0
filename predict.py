@@ -544,7 +544,7 @@ def predictX(data):
         # Generate SHAP values plot for a specific instance
         matplotlib.pyplot.figure(figsize=(10, 8))
         # shap.summary_plot(shap_values, X, plot_type="bar")
-        shap.decision_plot(explainer.expected_value[int(pred)], shap_values[int(pred)][0,:], cols)
+        shap.decision_plot(explainer.expected_value[int(pred)], shap_values[0][:,int(pred)], cols)
         plt.tight_layout()
         # Generate a unique filename using the current timestamp
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
