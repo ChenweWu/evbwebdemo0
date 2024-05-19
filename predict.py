@@ -23,7 +23,9 @@ from scipy import stats
 
 from PIL import Image
 from io import BytesIO
-
+import matplotlib
+matplotlib.use('agg')
+import matplotlib.pyplot as plt
 
 import xgboost as xgb
 def process_data(file):
@@ -495,8 +497,6 @@ def predictX(data):
         print("No data point matches the majority prediction.")
     import shap
 
-    import matplotlib
-    matplotlib.use('agg')
     import base64
     from io import BytesIO
 
