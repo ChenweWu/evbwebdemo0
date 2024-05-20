@@ -106,7 +106,7 @@ def predict():
         'prediction_result': prediction_result,
         'image_path': image_path,
         'descriptive_text': descriptive_text,
-        'shap_plot':url_for('static',filename=shap_plot)
+        # 'shap_plot':url_for('static',filename=shap_plot)
     })
 if __name__ == '__main__':
     app.run(debug=True)
