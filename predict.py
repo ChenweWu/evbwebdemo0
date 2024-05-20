@@ -538,23 +538,23 @@ def predictX(data):
         'Zs_max_y', 'Zs_min_y', 'Zs_mean_y', 'Zs_std_y', 'Zs_rms_y',
         'Zs_skew_y', 'Zs_kurtosis_y', 'Zs_crest_factor_y',
         'Zs_form_factor_y', 'Zs_median_y', 'Zs_variance_y', 'Zs_iqr_y'] 
-        explainer = shap.TreeExplainer(model)
-        shap_values = explainer.shap_values(X)
+        # explainer = shap.TreeExplainer(model)
+        # shap_values = explainer.shap_values(X)
         
-        # Generate SHAP values plot for a specific instance
-        matplotlib.pyplot.figure(figsize=(10, 8))
-        # shap.summary_plot(shap_values, X, plot_type="bar")
-        shap.decision_plot(explainer.expected_value[int(pred)], shap_values[0][:,int(pred)], cols)
-        plt.tight_layout()
-        # Generate a unique filename using the current timestamp
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        image_path = f'./static/shap_values_plot_{timestamp}.png'
-        p = f'shap_values_plot_{timestamp}.png'
-        # Save the plot directly to the specified path
-        matplotlib.pyplot.savefig(image_path)
-        matplotlib.pyplot.close()
+        # # Generate SHAP values plot for a specific instance
+        # matplotlib.pyplot.figure(figsize=(10, 8))
+        # # shap.summary_plot(shap_values, X, plot_type="bar")
+        # shap.decision_plot(explainer.expected_value[int(pred)], shap_values[0][:,int(pred)], cols)
+        # plt.tight_layout()
+        # # Generate a unique filename using the current timestamp
+        # timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        # image_path = f'./static/shap_values_plot_{timestamp}.png'
+        # p = f'shap_values_plot_{timestamp}.png'
+        # # Save the plot directly to the specified path
+        # matplotlib.pyplot.savefig(image_path)
+        # matplotlib.pyplot.close()
         
-        return p
-    plot_shap = get_shap_values_plot_path(selected_model,selected_data_point,prediction)
-    return prediction, plot_shap
+        return None
+    # plot_shap = get_shap_values_plot_path(selected_model,selected_data_point,prediction)
+    return prediction, None
 
