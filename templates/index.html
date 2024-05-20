@@ -77,8 +77,8 @@
                     contentType: 'application/json', // Adjust based on your request payload
                     success: function(response) {
                         $('#loadingPredict').hide();
-                        $('#predictionResult').html('Prediction: ' + response.prediction_result + '<br><img src="' + response.image_path+ '" alt="Prediction Image" style="width: 900px;">' +'<br>' + response.descriptive_text + '<br><img src="' + response.shap_plot + '" alt="Prediction Image" style="width: 900px;">' +'<br>');
-
+                        // $('#predictionResult').html('Prediction: ' + response.prediction_result + '<br><img src="' + response.image_path+ '" alt="Prediction Image" style="width: 900px;">' +'<br>' + response.descriptive_text + '<br><img src="' + response.shap_plot + '" alt="Prediction Image" style="width: 900px;">' +'<br>');
+                        $('#predictionResult').html('Prediction: ' + response.prediction_result + '<br><img src="' + response.image_path+ '" alt="Prediction Image" style="width: 900px;">' +'<br>' + response.descriptive_text +'<br>');
                         // $('#predictionResult').text('Prediction: ' + response.prediction_result);
                         // $('#predictionResult').html('Prediction: ' + response.prediction_result + '<br><img src="' + response.image_path + '" alt="Prediction Image"><br>' + response.descriptive_text);
                         // $('#ErrorMode').html('<img src="data:image/png;base64,' + response.encoded_image + '" alt="Error Plot">');
