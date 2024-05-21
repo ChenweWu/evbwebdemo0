@@ -47,13 +47,14 @@ def upload_visualize():
     # Process for visualization
     df = pd.read_csv(filepath,index_col=False)
     # Assuming get_df_vis, visualize_df_dis, and visualize_df_vib return base64 encoded images
-    df_vis = get_df_vis(df, 3)
+    df_vis = get_df_vis(df, 15)
     plot_url = visualize_df_dis(df_vis)
     plot_url2 = visualize_df_vib(df_vis)
-    
+    plot_url3 = visualize_df_freq(df_vis)    
     return jsonify({
         'plot_url': plot_url,
         'plot_url2': plot_url2,
+        'plot_url3': plot_url3,
     })
 
 # @app.route('/predict', methods=['POST'])
