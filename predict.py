@@ -315,6 +315,80 @@ def find_most_frequent_element(array):
     most_frequent = max(frequency_count, key=frequency_count.get)
     return most_frequent
 
+# def get_df_vis(df_in,n):
+#     # Convert 'Time' to datetime if it's not already
+#     # Function to convert time strings to datetime objects
+#     df = df_in.copy()
+#     def convert_to_datetime(time_str):
+#         time_str = time_str.lstrip()
+#         return datetime.strptime(time_str, '%H:%M:%S.%f')
+#     df['Time'] = df['Time'].apply(convert_to_datetime)
+
+#     # Step 1: Find the device with the most rows
+#     device_most_rows = df['Device name'].value_counts().idxmax()
+
+#     # Filter the DataFrame for this device
+#     df_filtered = df[df['Device name'] == device_most_rows]
+
+#     # Step 2: Sort by 'Time' to ensure order
+#     df_filtered = df_filtered.sort_values(by='Time')
+
+#     # Check if the DataFrame for the device covers at least n seconds
+#     if (df_filtered['Time'].max() - df_filtered['Time'].min()).total_seconds() >= n:
+#         # Calculate the start and end times for the middle n seconds
+#         time_span = df_filtered['Time'].max() - df_filtered['Time'].min()
+#         middle_start_time = df_filtered['Time'].min() + (time_span - pd.Timedelta(seconds=n)) / 2
+#         middle_end_time = middle_start_time + pd.Timedelta(seconds=n)
+
+#         # Filter for the middle 5 seconds
+#         subset_df = df_filtered[(df_filtered['Time'] >= middle_start_time) & (df_filtered['Time'] <= middle_end_time)]
+#     else:
+#         # If the time span is less than n seconds, you might return the entire DataFrame or handle as needed
+#         subset_df = df_filtered 
+#     return subset_df
+
+# def visualize_df_vib(subset_df):
+#     plt.figure(figsize=(8, 6))
+#     plt.plot(subset_df['Time'], subset_df['X-axis vibration displacement(um)'], label='X-axis', linestyle='-.')
+#     plt.plot(subset_df['Time'], subset_df['Y-axis vibration displacement(um)'], label='Y-axis', linestyle='--')
+#     plt.plot(subset_df['Time'], subset_df['Z-axis vibration displacement(um)'], label='Z-axis', linestyle='-')
+
+#     # Adding fancy elements
+#     plt.title('Vibration Displacement along X, Y, and Z axes', fontsize=16)
+#     plt.xlabel('Time', fontsize=14)
+#     plt.ylabel('Vibration Displacement (um)', fontsize=14)
+#     plt.legend(title='Axis', fontsize=12)
+#     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+#     plt.tight_layout()
+
+#     # Saving the plot as a PNG file
+
+#     img = io.BytesIO()
+#     plt.savefig(img, format='png')
+#     img.seek(0)
+#     plot_url = base64.b64encode(img.getvalue()).decode()
+#     return plot_url
+# def visualize_df_dis(df):
+#     plt.figure(figsize=(8, 6))
+#     plt.plot(df['Time'],df['X-axis vibration speed(mm/s)'], label='X-axis', linestyle='-.' )
+#     plt.plot(df['Time'],df['Y-axis vibration speed(mm/s)'], label='Y-axis', linestyle='--')
+#     plt.plot(df['Time'],df['Z-axis vibration speed(mm/s)'], label='Z-axis', linestyle='-')
+
+#     # Adding fancy elements
+#     plt.title('Vibration Speeds along X, Y, and Z axes', fontsize=16)
+#     plt.xlabel('Time', fontsize=14)
+#     plt.ylabel('Vibration Speed (mm/s)', fontsize=14)
+#     plt.legend(title='Axis', fontsize=12)
+#     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+#     plt.tight_layout()
+
+#     # Saving the plot as a PNG file
+
+#     img = io.BytesIO()
+#     plt.savefig(img, format='png')
+#     img.seek(0)
+#     plot_url = base64.b64encode(img.getvalue()).decode()
+#     return plot_url
 def get_df_vis(df_in,n):
     # Convert 'Time' to datetime if it's not already
     # Function to convert time strings to datetime objects
@@ -348,11 +422,17 @@ def get_df_vis(df_in,n):
     return subset_df
 
 def visualize_df_vib(subset_df):
+    # if not pd.api.types.is_datetime64_any_dtype(subset_df['Time']):
+    #     subset_df['Time'] = pd.to_datetime(subset_df['Time'])
+    # subset_df['Time'] = (subset_df['Time'] - subset_df['Time'].min()).dt.total_seconds()
+    time_numeric = (subset_df['Time'] - subset_df['Time'].min()).dt.total_seconds()
+    time_scaled = time_numeric
+    # with plt.style.context('science'):
     plt.figure(figsize=(8, 6))
-    plt.plot(subset_df['Time'], subset_df['X-axis vibration displacement(um)'], label='X-axis', linestyle='-.')
-    plt.plot(subset_df['Time'], subset_df['Y-axis vibration displacement(um)'], label='Y-axis', linestyle='--')
-    plt.plot(subset_df['Time'], subset_df['Z-axis vibration displacement(um)'], label='Z-axis', linestyle='-')
-
+    plt.plot(time_scaled , subset_df['X-axis vibration displacement(um)'], label='X-axis', linestyle='-.',color = 'black')
+    plt.plot(time_scaled , subset_df['Y-axis vibration displacement(um)'], label='Y-axis', linestyle='--',color = 'blue')
+    plt.plot(time_scaled , subset_df['Z-axis vibration displacement(um)'], label='Z-axis', linestyle='-',color = 'red')
+    plt.xlim(0,round(time_numeric.max(),0))
     # Adding fancy elements
     plt.title('Vibration Displacement along X, Y, and Z axes', fontsize=16)
     plt.xlabel('Time', fontsize=14)
@@ -369,13 +449,18 @@ def visualize_df_vib(subset_df):
     plot_url = base64.b64encode(img.getvalue()).decode()
     return plot_url
 def visualize_df_dis(df):
-    plt.figure(figsize=(8, 6))
-    plt.plot(df['Time'],df['X-axis vibration speed(mm/s)'], label='X-axis', linestyle='-.' )
-    plt.plot(df['Time'],df['Y-axis vibration speed(mm/s)'], label='Y-axis', linestyle='--')
-    plt.plot(df['Time'],df['Z-axis vibration speed(mm/s)'], label='Z-axis', linestyle='-')
-
+    # if not pd.api.types.is_datetime64_any_dtype(df['Time']):
+    #     df['Time'] = pd.to_datetime(df['Time'])
+    # df['Time'] = (df['Time'] - df['Time'].min()).dt.total_seconds()
+    time_numeric = (df['Time'] - df['Time'].min()).dt.total_seconds()
+    time_scaled = time_numeric
+    plt.figure(figsize=(8, 6))    
+    plt.plot(time_scaled ,df['X-axis vibration speed(mm/s)'], label='X-axis', linestyle='-.' ,color = 'black')
+    plt.plot(time_scaled ,df['Y-axis vibration speed(mm/s)'], label='Y-axis', linestyle='--',color = 'blue')
+    plt.plot(time_scaled ,df['Z-axis vibration speed(mm/s)'], label='Z-axis', linestyle='-',color = 'red')
+    plt.xlim(0,round(time_numeric.max(),0))
     # Adding fancy elements
-    plt.title('Vibration Speeds along X, Y, and Z axes', fontsize=16)
+    plt.title('Vibration Speed along X, Y, and Z axes', fontsize=16)
     plt.xlabel('Time', fontsize=14)
     plt.ylabel('Vibration Speed (mm/s)', fontsize=14)
     plt.legend(title='Axis', fontsize=12)
@@ -389,7 +474,32 @@ def visualize_df_dis(df):
     img.seek(0)
     plot_url = base64.b64encode(img.getvalue()).decode()
     return plot_url
+def visualize_df_freq(df):
+    # if not pd.api.types.is_datetime64_any_dtype(df['Time']):
+    #     df['Time'] = pd.to_datetime(df['Time'])
+    # df['Time'] = (df['Time'] - df['Time'].min()).dt.total_seconds()
+    time_numeric = (df['Time'] - df['Time'].min()).dt.total_seconds()
+    time_scaled = time_numeric
+    plt.figure(figsize=(8, 6))
+    plt.plot(time_scaled ,df['X-axis frequency vibration frequency()'], label='X-axis', linestyle='-.',color = 'black' )
+    plt.plot(time_scaled ,df['Y-axis frequency vibration frequency()'], label='Y-axis', linestyle='--',color = 'blue')
+    plt.plot(time_scaled ,df['Z-axis frequency vibration frequency()'], label='Z-axis', linestyle='-',color = 'red')
+    plt.xlim(0,round(time_numeric.max(),0))
+    # Adding fancy elements
+    plt.title('Vibration Frequency along X, Y, and Z axes', fontsize=16)
+    plt.xlabel('Time', fontsize=14)
+    plt.ylabel('Vibration Frequency', fontsize=14)
+    plt.legend(title='Axis', fontsize=12)
+    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+    plt.tight_layout()
 
+    # Saving the plot as a PNG file
+
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plot_url = base64.b64encode(img.getvalue()).decode()
+    return plot_url
 def encode_image_to_base64(image_path):
     """Encode image to base64."""
     with Image.open(image_path) as image:
