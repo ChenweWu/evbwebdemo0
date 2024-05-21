@@ -86,14 +86,14 @@ def predict():
     folder_path = os.path.join(os.getcwd(), "Failure Mode Images")
     files = os.listdir(folder_path)
     files.sort()  # Ensure files are sorted correctly, might need custom sorting for numeric prefixes
-    
+    print(files)
     # Select the image based on prediction_result
     selected_image = None
     for file in files:
         if file.startswith(str(prediction_result) + " "):  # Match files starting with prediction_result
             selected_image = file
             break
-    
+    print('IMAGE_SELECTED',selected_image)
     if selected_image:
         image_path = url_for('static', filename=selected_image)
         # Extract the descriptive text from the filename
