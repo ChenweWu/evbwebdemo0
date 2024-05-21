@@ -102,7 +102,10 @@ def predict():
     else:
         image_path = ""
         descriptive_text = "No image found"
-
+    if str(prediction_result) == '12':
+        descriptive_text =  'with top cover internal beam bolt torque loss'
+    if str(prediction_result) == '8':
+        descriptive_text = 'no top cover internal beam bolt torque loss'
     return jsonify({
         'prediction_result': prediction_result,
         'image_path': image_path,
