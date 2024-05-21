@@ -349,9 +349,9 @@ def get_df_vis(df_in,n):
 
 def visualize_df_vib(subset_df):
     plt.figure(figsize=(8, 6))
-    plt.plot(subset_df['Time'], subset_df['X-axis vibration displacement(um)'], label='X-axis', linestyle='-')
+    plt.plot(subset_df['Time'], subset_df['X-axis vibration displacement(um)'], label='X-axis', linestyle='-.')
     plt.plot(subset_df['Time'], subset_df['Y-axis vibration displacement(um)'], label='Y-axis', linestyle='--')
-    plt.plot(subset_df['Time'], subset_df['Z-axis vibration displacement(um)'], label='Z-axis', linestyle='-.')
+    plt.plot(subset_df['Time'], subset_df['Z-axis vibration displacement(um)'], label='Z-axis', linestyle='-')
 
     # Adding fancy elements
     plt.title('Vibration Displacement along X, Y, and Z axes', fontsize=16)
@@ -370,13 +370,13 @@ def visualize_df_vib(subset_df):
     return plot_url
 def visualize_df_dis(df):
     plt.figure(figsize=(8, 6))
-    plt.plot(df['Time'],df['X-axis vibration speed(mm/s)'], label='X-axis', linestyle='-' )
+    plt.plot(df['Time'],df['X-axis vibration speed(mm/s)'], label='X-axis', linestyle='-.' )
     plt.plot(df['Time'],df['Y-axis vibration speed(mm/s)'], label='Y-axis', linestyle='--')
-    plt.plot(df['Time'],df['Z-axis vibration speed(mm/s)'], label='Z-axis', linestyle='-.')
+    plt.plot(df['Time'],df['Z-axis vibration speed(mm/s)'], label='Z-axis', linestyle='-')
 
     # Adding fancy elements
     plt.title('Vibration Speeds along X, Y, and Z axes', fontsize=16)
-    plt.xlabel('Measurement Number', fontsize=14)
+    plt.xlabel('Time', fontsize=14)
     plt.ylabel('Vibration Speed (mm/s)', fontsize=14)
     plt.legend(title='Axis', fontsize=12)
     plt.grid(True, which='both', linestyle='--', linewidth=0.5)
